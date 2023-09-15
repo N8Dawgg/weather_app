@@ -1,0 +1,19 @@
+{
+  "name": "weather_app",
+  "version": "1.0.0",
+  "description": "A basic weather app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/N8Dawgg/weather_app.git"
+  },
+  "author": "Nat Wheeler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/N8Dawgg/weather_app/issues"
+  },
+  "homepage": "https://github.com/N8Dawgg/weather_app#readme"
+}
