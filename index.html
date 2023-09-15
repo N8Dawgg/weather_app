@@ -6,9 +6,22 @@
     <title>Document</title>
     <script src="index.js" defer></script>
     <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <input id="search_querry" />
-    <button id="go_button">GO</button>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <input id="search_querry" />
+      <button id="go_button">GO</button>
+    </div>
+    <div style="display: flex; justify-content: center">
+      <div id="day_panel_centerer"></div>
+    </div>
+    <div id="graph_container"></div>
   </body>
 </html>

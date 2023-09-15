@@ -1,0 +1,69 @@
+:root {
+  --bgCol: white;
+  --maxWidth: 900px;
+}
+
+* {
+  transition-duration: 1s;
+  font-family: "Quicksand", sans-serif;
+}
+
+#day_panel_centerer {
+  width: min(100%, var(--maxWidth));
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.day_panel {
+  /*DAY PANEL*/
+  position: relative;
+  top: 0px;
+  border: 1px outset var(--bgCol);
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 80px;
+  height: 165px;
+}
+
+.date_label {
+  font-size: small;
+  text-align: center;
+}
+
+.week_day_label {
+  font-size: large;
+  text-align: center;
+}
+
+.cur_temp_label {
+  font-size: x-large;
+  text-align: center;
+}
+
+.avg_temp_label {
+  font-size: small;
+  text-align: center;
+}
+
+.condition_icon {
+  width: 64px;
+  height: 64px;
+  align-self: center;
+}
+
+.condition_label {
+  font-size: small;
+  text-align: center;
+}
+
+.hidden {
+  position: relative;
+  opacity: 0%;
+  top: 20px;
+}
+
+/* GRAPH STUFF */
