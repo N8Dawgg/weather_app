@@ -5,6 +5,9 @@ const changeDelay = 330;
 const goButton = document.querySelector("#go_button");
 const searchBar = document.querySelector("#search_querry");
 const dayPanelCenterer = document.querySelector("#day_panel_centerer");
+const graphContainer = document.querySelector("#graph_container");
+const graphSVG = document.querySelector("#graph_svg");
+const graphPath = document.querySelector("#graph_path");
 
 let dayPanels = [];
 
@@ -36,6 +39,9 @@ function parseData(data) {
       dayPanels[i].updateDayPanel(data.forecast.forecastday[i]);
     }, i * changeDelay);
   }
+  setTimeout(() => {
+    updateGraph(data);
+  }, changeDelay * 3);
 }
 
 const createDayPanel = () => {
@@ -50,10 +56,6 @@ const createDayPanel = () => {
   let weekDayLable = document.createElement("div");
   weekDayLable.classList.add("week_day_label");
   container.append(weekDayLable);
-
-  let curTempLabel = document.createElement("div");
-  curTempLabel.classList.add("cur_temp_label");
-  container.append(curTempLabel);
 
   let avgTempLabel = document.createElement("div");
   avgTempLabel.classList.add("avg_temp_label");
@@ -71,7 +73,7 @@ const createDayPanel = () => {
     //dayDate = data.forecast.forecastday[#]
     dateLabel.textContent = dayData.date;
     weekDayLable.textContent = "Today";
-    //curTempLabel...
+
     avgTempLabel.textContent = dayData.day.avgtemp_f.toString() + "F\u00B0";
     conditionIcon.setAttribute("src", dayData.day.condition.icon);
     conditionLabel.textContent = dayData.day.condition.text;
@@ -80,6 +82,54 @@ const createDayPanel = () => {
 
   return { container, updateDayPanel };
 };
+
+function updateGraph(data) {
+  const GRAPH_HEIGHT = 300;
+  const GRAPH_WIDTH = 500;
+  const TEMP_LOW_SCALE = 32;
+  const TEMP_HIGH_SCALE = 100;
+
+  let currentHour = data.current.last_updated;
+  //the last_updated string has the format "##/##/#### HR:MN".
+  //we take the split after the " " and before the ":" to get the hour.
+  currentHour = parseInt(currentHour.split(" ")[1].split(":")[0]);
+  let remainingDayOneHours = 23 - currentHour;
+  let graphPointCount = remainingDayOneHours + 24 * 2;
+  let graphRightwardMarch = GRAPH_WIDTH / (graphPointCount - 1);
+
+  //get all of the day data lined up.
+  let tempByHour = [];
+  for (let i = currentHour; i < 3 * 24; i++) {
+    let fcdIdx = Math.floor(i / 24.0);
+    let hrIdx = i % 24;
+    tempByHour.push(data.forecast.forecastday[fcdIdx].hour[hrIdx].temp_f);
+  }
+  let minScale = Math.min(TEMP_LOW_SCALE, Math.min(...tempByHour));
+  let maxScale = Math.max(TEMP_HIGH_SCALE, Math.max(...tempByHour));
+  let degToYAxis = (deg) => {
+    return (
+      GRAPH_HEIGHT - ((deg - minScale) * GRAPH_HEIGHT) / (maxScale - minScale)
+    );
+  };
+  let graphDStr = "M-5 " + degToYAxis(tempByHour[0]);
+  for (let i = 0; i < graphPointCount; i++) {
+    let x = (graphRightwardMarch * i).toString();
+    let y = degToYAxis(tempByHour[i]).toString();
+    graphDStr += "L" + x + " " + y;
+  }
+
+  //box up the bottom of the graph.
+  let finalX = (graphRightwardMarch * graphPointCount).toString() + " ";
+  let finalY = (GRAPH_HEIGHT + 5).toString();
+  graphDStr += "L" + finalX;
+  graphDStr += degToYAxis(tempByHour[graphPointCount - 1]).toString();
+  graphDStr += "L" + finalX;
+  graphDStr += finalY + "L-5 " + finalY + "z";
+
+  graphPath.setAttribute("d", graphDStr);
+
+  graphContainer.classList.remove("hidden");
+}
 
 init();
 

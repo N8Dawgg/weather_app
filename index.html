@@ -22,6 +22,16 @@
     <div style="display: flex; justify-content: center">
       <div id="day_panel_centerer"></div>
     </div>
-    <div id="graph_container"></div>
+    <div style="display: flex; justify-content: center; gap: 8px">
+      <div id="graph_container" class="hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewport="0 0 500 300"
+          id="graph_svg"
+        >
+          <path xmlns="http://www.w3.org/2000/svg" id="graph_path" />
+        </svg>
+      </div>
+    </div>
   </body>
 </html>

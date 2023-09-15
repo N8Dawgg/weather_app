@@ -1,24 +1,32 @@
 :root {
-  --bgCol: white;
-  --maxWidth: 900px;
+  --primColor: white;
+  --graphColor: 255, 200, 0;
+  --maxWidth: 500px;
 }
 
 * {
   transition-duration: 1s;
   font-family: "Quicksand", sans-serif;
 }
+body {
+  background: linear-gradient(#030027, #05f8d0, #030027, #05f8d0);
+  background-size: 100vw 800vh;
+  /* background-position: 0%; */
+}
 
 #day_panel_centerer {
   width: min(100%, var(--maxWidth));
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin: 16px;
 }
 
 .day_panel {
   /*DAY PANEL*/
   position: relative;
   top: 0px;
-  border: 1px outset var(--bgCol);
+  background-color: var(--primColor);
+  border: 2px outset var(--primColor);
   border-radius: 8px;
   padding: 4px;
   display: flex;
@@ -39,13 +47,8 @@
   text-align: center;
 }
 
-.cur_temp_label {
-  font-size: x-large;
-  text-align: center;
-}
-
 .avg_temp_label {
-  font-size: small;
+  font-size: x-large;
   text-align: center;
 }
 
@@ -67,3 +70,25 @@
 }
 
 /* GRAPH STUFF */
+#graph_container {
+  position: relative;
+  top: 0px;
+  overflow: hidden;
+  width: min(100%, var(--maxWidth));
+  height: 300px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#graph_svg {
+  height: 300px;
+  width: var(--maxWidth);
+  scale: 100% 100%;
+  background: none;
+}
+
+#graph_path {
+  /* height: 300px;
+  width: 300px; */
+  stroke: rgb(var(--graphColor));
+  fill: rgba(var(--graphColor), 0.5);
+}
